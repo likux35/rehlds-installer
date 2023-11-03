@@ -8,7 +8,7 @@ cd /root/
 ``
 
 ``
-wget https://raw.githubusercontent.com/likux35/rehlds-installer-beta/main/rehlds.sh
+wget https://raw.githubusercontent.com/likux35/rehlds-installer/main/rehlds.sh
 ``
 
 ``
