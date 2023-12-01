@@ -9,8 +9,9 @@
 # - Packaged versions are downloaded with the latest version automatically.
 # v4.1 update for existing version
 # v4.2 small improvement for update package.
+# 4.2.1 small bug fixed
 
-VERSION=4.2
+VERSION=4.2.1
 
 SCRIPT_NAME=`basename $0`
 MAIN_DIR=$( getent passwd "$USER" | cut -d: -f6 )
@@ -73,7 +74,7 @@ check_packages() {
 		echo -e "Bus paleistos sios komandos:\n"
 		echo "apt-get update"
 		if $BIT64_CHECK && ! $LIB_CHECK; then
-                                echo "apt-get -y install lib32gcc1s"
+                                echo "apt-get -y install lib32gcc1"
 		fi
   
 		if ! $SCREEN_CHECK; then
