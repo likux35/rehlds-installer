@@ -11,8 +11,9 @@
 # v4.2 small improvement for update package.
 # 4.2.1 small bug fixed
 # 4.3 small bug fixes, steamcmd trash files removed.
+# 4.3.1 hlds files fixed.
 
-VERSION=4.3
+VERSION=4.3.1
 
 SCRIPT_NAME=`basename $0`
 MAIN_DIR=$( getent passwd "$USER" | cut -d: -f6 )
@@ -22,6 +23,7 @@ INSTALL_DIR="$MAIN_DIR/$SERVER_DIR"
 
 echo "-------------------------------------------------------------------------------"
 echo "Counter Strike 1.6 serverio instaliacija"
+echo "v. $VERSION"
 echo "-------------------------------------------------------------------------------"
 echo "Special thanks to: saimon.lt project"
 echo "-------------------------------------------------------------------------------"
@@ -170,7 +172,7 @@ alternative_install() {
 	echo "-------------------------------------------------------------------------------"
 	echo "Siunciami hlds failai ..."
 	cd $INSTALL_DIR
-	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/wd9a1cp5bt6swcdbzwn3t/hlds.tar.gz?rlkey=wbaa2jliwrlcaicxf2b5t8w7e&dl=1"
+	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/9x6pd20ut6t7usx41457n/hlds.tar.gz?rlkey=6l8zc7qajqn6vm97mad2ljj7z&dl=1"
 	if [ ! -e "_hlds.tar.gz" ]; then
 		echo "Klaida: Nepavyko gauti failu is serverio. Nutraukiama..."
 		exit 1
@@ -281,7 +283,7 @@ echo "--------------------------------------------------------------------------
 	if [ "$UPDATE" -eq 0 ] || [ "$UPDATE_RDLL" -eq 0 ]; then
 	echo "Siunciami hlds failai ..."
 	cd $INSTALL_DIR
-	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/wd9a1cp5bt6swcdbzwn3t/hlds.tar.gz?rlkey=wbaa2jliwrlcaicxf2b5t8w7e&dl=1"
+	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/9x6pd20ut6t7usx41457n/hlds.tar.gz?rlkey=6l8zc7qajqn6vm97mad2ljj7z&dl=1"
 	if [ ! -e "_hlds.tar.gz" ]; then
 		echo "Klaida: Nepavyko gauti failu is serverio. Nutraukiama..."
 		exit 1
