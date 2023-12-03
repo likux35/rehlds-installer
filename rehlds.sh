@@ -10,21 +10,20 @@
 # v4.1 update for existing version
 # v4.2 small improvement for update package.
 # 4.2.1 small bug fixed
+# 4.3 small bug fixes, steamcmd trash files removed.
 
-VERSION=4.2.1
+VERSION=4.3
 
 SCRIPT_NAME=`basename $0`
 MAIN_DIR=$( getent passwd "$USER" | cut -d: -f6 )
-
-STEAMCMD_URL="http://media.steampowered.com/installer/steamcmd_linux.tar.gz"
-STEAMCMD_DIR="$MAIN_DIR/steamcmd"
-STEAMCMD_CMD="steamcmd.sh"
 
 SERVER_DIR="rehlds"
 INSTALL_DIR="$MAIN_DIR/$SERVER_DIR"
 
 echo "-------------------------------------------------------------------------------"
-echo "SAIMON.lt Counter Strike 1.6 serverio instaliacija"
+echo "Counter Strike 1.6 serverio instaliacija"
+echo "-------------------------------------------------------------------------------"
+echo "Special thanks to: saimon.lt project"
 echo "-------------------------------------------------------------------------------"
 
 check_version() {
@@ -57,7 +56,7 @@ check_version() {
 check_packages() {
 	
 	BIT64_CHECK=false && [ $(getconf LONG_BIT) == "64" ] && BIT64_CHECK=true
-	LIB_CHECK=false && [ "`(dpkg --get-selections lib32gcc1 | egrep -o \"(de)?install\") 2> /dev/null`" = "install" ] && LIB_CHECK=true
+	LIB_CHECK=false && [ "`(dpkg --get-selections lib32gcc-s1 | egrep -o \"(de)?install\") 2> /dev/null`" = "install" ] && LIB_CHECK=true
 	SCREEN_CHECK=false && [ "`(dpkg --get-selections screen | egrep -o \"(de)?install\") 2> /dev/null`" = "install" ] && SCREEN_CHECK=true
  	UNZIP_CHECK=false && [ "`(dpkg --get-selections unzip | egrep -o \"(de)?install\") 2> /dev/null`" = "install" ] && UNZIP_CHECK=true
 	
@@ -74,7 +73,7 @@ check_packages() {
 		echo -e "Bus paleistos sios komandos:\n"
 		echo "apt-get update"
 		if $BIT64_CHECK && ! $LIB_CHECK; then
-                                echo "apt-get -y install lib32gcc1"
+                                echo "apt-get -y install lib32gcc-s1"
 		fi
   
 		if ! $SCREEN_CHECK; then
@@ -91,6 +90,10 @@ check_packages() {
 	
 		case "$NUMBER" in
 		"1")
+			if $BIT64_CHECK && ! $LIB_CHECK; then
+                                apt-get -y install lib32gcc-s1
+			fi
+  
 			if ! $SCREEN_CHECK; then
 				apt-get -y install screen
 			fi
@@ -165,9 +168,9 @@ check_dir() {
 }
 alternative_install() {
 	echo "-------------------------------------------------------------------------------"
-	echo "Instaliuojama alternatyviu metodu..."
+	echo "Siunciami hlds failai ..."
 	cd $INSTALL_DIR
-	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/xrwzeoe9ousxmzs90xa28/hlds.tar.gz?rlkey=ft280kq2o031auxse6s9djnw4&dl=1"
+	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/wd9a1cp5bt6swcdbzwn3t/hlds.tar.gz?rlkey=wbaa2jliwrlcaicxf2b5t8w7e&dl=1"
 	if [ ! -e "_hlds.tar.gz" ]; then
 		echo "Klaida: Nepavyko gauti failu is serverio. Nutraukiama..."
 		exit 1
@@ -272,22 +275,13 @@ mkdir $INSTALL_DIR
 cd $INSTALL_DIR
 
 cd $MAIN_DIR
-if [ ! -e "$STEAMCMD_DIR/$STEAMCMD_CMD" ]; then
-	if [ ! -e $STEAMCMD_DIR ]; then
-		mkdir $STEAMCMD_DIR
-	fi
-	cd $STEAMCMD_DIR
-	wget $STEAMCMD_URL
-	tar -xzf steamcmd_linux.tar.gz
-	rm steamcmd_linux.tar.gz
-fi
 
 echo "-------------------------------------------------------------------------------"
 
 	if [ "$UPDATE" -eq 0 ] || [ "$UPDATE_RDLL" -eq 0 ]; then
-	echo "Instaliuojama alternatyviu metodu..."
+	echo "Siunciami hlds failai ..."
 	cd $INSTALL_DIR
-	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/xrwzeoe9ousxmzs90xa28/hlds.tar.gz?rlkey=ft280kq2o031auxse6s9djnw4&dl=1"
+	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/wd9a1cp5bt6swcdbzwn3t/hlds.tar.gz?rlkey=wbaa2jliwrlcaicxf2b5t8w7e&dl=1"
 	if [ ! -e "_hlds.tar.gz" ]; then
 		echo "Klaida: Nepavyko gauti failu is serverio. Nutraukiama..."
 		exit 1
@@ -729,9 +723,6 @@ echo "$INSTALL_DIR/start - paleisti serveri.
 $INSTALL_DIR/stop - sustabdyti serveri.
 $INSTALL_DIR/restart - perkrauti serveri."
 fi
-if $BIT64_CHECK && ! $LIB_CHECK; then
-				apt-get -y install lib32gcc1
-			fi
 
 exit 0
 # Counter Strike 1.6 serverio instaliacijos skriptas
