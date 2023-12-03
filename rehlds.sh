@@ -23,7 +23,6 @@ INSTALL_DIR="$MAIN_DIR/$SERVER_DIR"
 
 echo "-------------------------------------------------------------------------------"
 echo "Counter Strike 1.6 serverio instaliacija"
-echo "v.$VERSION"
 echo "-------------------------------------------------------------------------------"
 echo "Special thanks to: saimon.lt project"
 echo "-------------------------------------------------------------------------------"
