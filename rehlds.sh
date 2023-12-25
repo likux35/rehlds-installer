@@ -12,8 +12,9 @@
 # 4.2.1 small bug fixed
 # 4.3 small bug fixes, steamcmd trash files removed.
 # 4.3.1 - 4.4 hlds files fixed.
+# 4.5 - new hlds (app 10) version pushed - https://store.steampowered.com/news/app/10/view/3887232925354378310
 
-VERSION=4.4
+VERSION=4.5
 
 SCRIPT_NAME=`basename $0`
 MAIN_DIR=$( getent passwd "$USER" | cut -d: -f6 )
@@ -171,7 +172,7 @@ alternative_install() {
 	echo "-------------------------------------------------------------------------------"
 	echo "Siunciami hlds failai ..."
 	cd $INSTALL_DIR
-	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/lbt6o63mgsfen8rw479ad/hlds.tar.gz?rlkey=7qmdfkgpqlzj2askvm4kcg49p&dl=1"
+	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/ouxft5sa0vb0np9629scy/hlds.tar.gz?rlkey=3k2yh6plgkoli4hqlzxenducx&dl=1"
 	if [ ! -e "_hlds.tar.gz" ]; then
 		echo "Klaida: Nepavyko gauti failu is serverio. Nutraukiama..."
 		exit 1
@@ -222,14 +223,14 @@ echo "--------------------------------------------------------------------------
 echo "Pasirinkite modifikacijas, kurios bus instaliuotos."
 echo "-------------------------------------------------------------------------------"
 echo "([modifikacija] | (serverio tipas)):"
-echo "1. [rehlds][metamod-r][reunion][amxmodx] | (steam / nosteam) (Rekomenduojama)"
-echo "2. [rehlds][metamod-r][reunion][amxmodx] + ReGameDLL | (steam / nosteam)"
+echo "1. [rehlds][metamod-r][reunion][amxmodx] | (steam / non-steam) (Rekomenduojama)"
+echo "2. [rehlds][metamod-r][reunion][amxmodx] + ReGameDLL | (steam / non-steam)"
 echo "-------------------------------------------------------------------------------"
 else
 echo "--- Pasirinkite modifikacijas, kurios bus atnaujintos: ------------------------"
 echo "([modifikacija] | (serverio tipas)):"
-echo "1. [--> UPDATE <-- ] [rehlds][metamod-r][reunion][amxmodx] | (steam / nosteam)"
-echo "2. [--> UPDATE <-- ] [rehlds][metamod-r][reunion][amxmodx] + ReGameDLL | (steam / nosteam)"
+echo "1. [--> UPDATE <-- ] [rehlds][metamod-r][reunion][amxmodx] | (steam / non-steam)"
+echo "2. [--> UPDATE <-- ] [rehlds][metamod-r][reunion][amxmodx] + ReGameDLL | (steam / non-steam)"
 echo "-------------------------------------------------------------------------------"
 fi
 read -p "Iveskite pasirinkta punkta: " NUMBER
@@ -282,7 +283,7 @@ echo "--------------------------------------------------------------------------
 	if [ "$UPDATE" -eq 0 ] || [ "$UPDATE_RDLL" -eq 0 ]; then
 	echo "Siunciami hlds failai ..."
 	cd $INSTALL_DIR
-	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/lbt6o63mgsfen8rw479ad/hlds.tar.gz?rlkey=7qmdfkgpqlzj2askvm4kcg49p&dl=1"
+	wget -O _hlds.tar.gz "https://www.dropbox.com/scl/fi/ouxft5sa0vb0np9629scy/hlds.tar.gz?rlkey=3k2yh6plgkoli4hqlzxenducx&dl=1"
 	if [ ! -e "_hlds.tar.gz" ]; then
 		echo "Klaida: Nepavyko gauti failu is serverio. Nutraukiama..."
 		exit 1
@@ -527,7 +528,7 @@ rm sqlite_amxx_i386.so
 cd $INSTALL_DIR
 fi
 
-echo "instaliuojamas Amxmodx v. $(wget -T 5 -qO - https://raw.githubusercontent.com/likux35/rehlds-versions/main/amxx-version.txt) (Build: $(wget -T 5 -qO - https://raw.githubusercontent.com/likux35/rehlds-versions/main/amxx-build.txt) ..."
+echo "instaliuojamas Amxmodx v. $(wget -T 5 -qO - https://raw.githubusercontent.com/likux35/rehlds-versions/main/amxx-version.txt) (Build: $(wget -T 5 -qO - https://raw.githubusercontent.com/likux35/rehlds-versions/main/amxx-build.txt)) ..."
 wget -q -P cstrike https://www.amxmodx.org/amxxdrop/$(wget -T 5 -qO - https://raw.githubusercontent.com/likux35/rehlds-versions/main/amxx-version.txt)/amxmodx-$(wget -T 5 -qO - https://raw.githubusercontent.com/likux35/rehlds-versions/main/amxx-build.txt)-base-linux.tar.gz
 if [ ! -e "cstrike/amxmodx-$(wget -T 5 -qO - https://raw.githubusercontent.com/likux35/rehlds-versions/main/amxx-build.txt)-base-linux.tar.gz" ]; then
 	echo "Klaida: Nepavyko amxmodx failu is serverio. Nutraukiama..."
