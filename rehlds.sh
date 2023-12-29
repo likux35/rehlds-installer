@@ -13,14 +13,24 @@
 # 4.3 small bug fixes, steamcmd trash files removed.
 # 4.3.1 - 4.4 hlds files fixed.
 # 4.5 - new hlds (app 10) version pushed - https://store.steampowered.com/news/app/10/view/3887232925354378310
+# 4.5.1 - only debian 10-11 support. Other OS not recommended, but should work.
 
-VERSION=4.5
+VERSION=4.5.1
 
 SCRIPT_NAME=`basename $0`
 MAIN_DIR=$( getent passwd "$USER" | cut -d: -f6 )
 
 SERVER_DIR="rehlds"
 INSTALL_DIR="$MAIN_DIR/$SERVER_DIR"
+
+if [[ $(cat /etc/os-release | grep "VERSION_ID" | cut -d'"' -f2) == "10" ]] && [[ $(cat /etc/os-release | grep "ID" | cut -d'"' -f2) == "debian" ]]; then
+    $bits_lib_32="lib32gcc1"
+elif [[ $(cat /etc/os-release | grep "VERSION_ID" | cut -d'"' -f2) == "11" ]] && [[ $(cat /etc/os-release | grep "ID" | cut -d'"' -f2) == "debian" ]]; then
+    $bits_lib_32="lib32gcc-s1"
+else
+    $bits_lib_32="lib32gcc1"	
+    echo "[WARNING] Your OS is not supported, but it should work. We recommend Debian 10 or 11 only."
+fi
 
 echo "-------------------------------------------------------------------------------"
 echo "Counter Strike 1.6 serverio instaliacija"
@@ -58,7 +68,7 @@ check_version() {
 check_packages() {
 	
 	BIT64_CHECK=false && [ $(getconf LONG_BIT) == "64" ] && BIT64_CHECK=true
-	LIB_CHECK=false && [ "`(dpkg --get-selections lib32gcc-s1 | egrep -o \"(de)?install\") 2> /dev/null`" = "install" ] && LIB_CHECK=true
+	LIB_CHECK=false && [ "`(dpkg --get-selections $bits_lib_32 | egrep -o \"(de)?install\") 2> /dev/null`" = "install" ] && LIB_CHECK=true
 	SCREEN_CHECK=false && [ "`(dpkg --get-selections screen | egrep -o \"(de)?install\") 2> /dev/null`" = "install" ] && SCREEN_CHECK=true
  	UNZIP_CHECK=false && [ "`(dpkg --get-selections unzip | egrep -o \"(de)?install\") 2> /dev/null`" = "install" ] && UNZIP_CHECK=true
 	
@@ -75,7 +85,7 @@ check_packages() {
 		echo -e "Bus paleistos sios komandos:\n"
 		echo "apt-get update"
 		if $BIT64_CHECK && ! $LIB_CHECK; then
-                                echo "apt-get -y install lib32gcc-s1"
+                                echo "apt-get -y install $bits_lib_32"
 		fi
   
 		if ! $SCREEN_CHECK; then
@@ -93,7 +103,7 @@ check_packages() {
 		case "$NUMBER" in
 		"1")
 			if $BIT64_CHECK && ! $LIB_CHECK; then
-                                apt-get -y install lib32gcc-s1
+                                apt-get -y install $bits_lib_32
 			fi
   
 			if ! $SCREEN_CHECK; then
