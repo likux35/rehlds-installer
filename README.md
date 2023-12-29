@@ -1,4 +1,4 @@
-# rehlds-installer (v4.5)
+# rehlds-installer (v4.5.1)
 ReHLDS installation script (Extended support)
 
 # Instaliacija
