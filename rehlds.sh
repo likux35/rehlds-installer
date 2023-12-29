@@ -24,11 +24,11 @@ SERVER_DIR="rehlds"
 INSTALL_DIR="$MAIN_DIR/$SERVER_DIR"
 
 if [[ $(cat /etc/os-release | grep "VERSION_ID" | cut -d'"' -f2) == "10" ]] && [[ $(cat /etc/os-release | grep "ID" | cut -d'"' -f2) == "debian" ]]; then
-    $bits_lib_32="lib32gcc1"
+    bits_lib_32="lib32gcc1"
 elif [[ $(cat /etc/os-release | grep "VERSION_ID" | cut -d'"' -f2) == "11" ]] && [[ $(cat /etc/os-release | grep "ID" | cut -d'"' -f2) == "debian" ]]; then
-    $bits_lib_32="lib32gcc-s1"
+    bits_lib_32="lib32gcc-s1"
 else
-    $bits_lib_32="lib32gcc1"	
+    bits_lib_32="lib32gcc1"	
     echo "[WARNING] Your OS is not supported, but it should work. We recommend Debian 10 or 11 only."
 fi
 
